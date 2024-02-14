@@ -18,21 +18,21 @@
 
     <div class="container">
         <div class="row">
-            <form action="/teachers" method="POST">
+            <form th:object="${newtTeacherRequest}" action="/teachers" method="POST">
                 <div class="mb-03">
                     <label class="form-label">Name</label>
-                    <input class="form-control" type="text" name="name">
+                    <input class="form-control" type="text" th:field="*{name}">
                     <div></div>
                 </div>
                 <div class="mb-03">
                     <label class="form-label">Remuneration</label>
-                    <input class="form-control" type="text" name="remuneration">
+                    <input class="form-control" type="text" th:field="*{remuneration}">
                     <div></div>
                 </div>
                 <div class="mb-03">
                     <label class="form-label">Status</label>
-                    <select class="form-select" name="statusTeacher">
-                        <option th:each="status:${statusTeacher}" th:value="${status}" th:text="${status}"></option>
+                    <select class="form-select" th:field="*{statusTeacher}">
+                        <option th:each="status:${liststatusTeacher}" th:value="${status}" th:text="${status}"></option>
                     </select>
                 </div>
                 <button class="btn btn-primary" type="submit">Submeter</button>
