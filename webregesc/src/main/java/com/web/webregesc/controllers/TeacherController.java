@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.web.webregesc.dto.NewtTeacherRequest;
+import com.web.webregesc.dto.NewTeacherRequest;
 import com.web.webregesc.models.StatusTeacher;
 import com.web.webregesc.models.Teacher;
 import com.web.webregesc.repository.TeacherRepository;
@@ -21,7 +21,7 @@ public class TeacherController {
 
     @Autowired
     private TeacherRepository teacherRepository;
-
+    
     @GetMapping("/teachers")
     public ModelAndView index(){
         List<Teacher> teachers = this.teacherRepository.findAll();
@@ -32,21 +32,21 @@ public class TeacherController {
     }
     
     @GetMapping("teachers/new")
-    public ModelAndView nnew(){
+    public ModelAndView nnew(NewTeacherRequest newTeacherRequest){
         ModelAndView mv = new ModelAndView("teachers/new");
         mv.addObject("liststatusTeacher", StatusTeacher.values());
         return mv;
     }
 
     @PostMapping("/teachers")
-    public ModelAndView create(@Valid NewtTeacherRequest newtTeacherRequest, BindingResult bindingResult){
+    public ModelAndView create(@Valid NewTeacherRequest newTeacherRequest, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             ModelAndView mv = new ModelAndView("teachers/new");
             mv.addObject("liststatusTeacher", StatusTeacher.values());
             return mv;
         }
         else{
-            Teacher teacher = newtTeacherRequest.toteacher();
+            Teacher teacher = newTeacherRequest.toteacher();
             this.teacherRepository.save(teacher);
             return new ModelAndView("redirect:/teachers");
         }
